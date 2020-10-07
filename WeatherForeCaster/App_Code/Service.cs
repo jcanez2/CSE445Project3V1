@@ -72,7 +72,7 @@ public class CorrdByZipModel
 
 public class DailyForeCastObject
 {
-    public static async Task<ForeCastModel> LoadForecast()
+    public static async Task<ForeCastModel> LoadForecast(int zip)
     {
         /*
         string url = "";
@@ -94,7 +94,7 @@ public class DailyForeCastObject
         string url = "";
         double longitude;
         double latitude;
-        int enteredZip = 94040;
+        int enteredZip = zip;
         string cityName = "blank";
 
         url = 
@@ -145,7 +145,7 @@ public class Service : IService
     public async Task<string> GetFiveDayForecast(int zip)
     {
         ApiHelper.InitializeClient();
-        await LoadForecastReport();
+        await LoadForecastReport(zip);
         string newTimezone = currentForeCastModel.timezone;
         int timeZoneOffset = currentForeCastModel.timezone_offset;
         List<DailyObject> myDailyObjects = currentForeCastModel.daily;
@@ -170,8 +170,8 @@ public class Service : IService
         return response;
     }
 
-    private async Task LoadForecastReport()
+    private async Task LoadForecastReport(int zip)
     {
-        currentForeCastModel = await DailyForeCastObject.LoadForecast();
+        currentForeCastModel = await DailyForeCastObject.LoadForecast(zip);
     }
 }
