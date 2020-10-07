@@ -93,17 +93,20 @@ public class Service : IService
         int timeZoneOffset = currentForeCastModel.timezone_offset;
         List<DailyObject> myDailyObjects = currentForeCastModel.daily;
 
-        string response = "";
+        DateTime theDates = DateTime.Today;
+
+        string response = newTimezone + ",";
         for (int i = 0; i < 5; i++)
         {
+            response += theDates.AddDays(i).ToString("MM/dd/yyyy") + ": High will be ";
             response += myDailyObjects[i].temp.max;
-            response += "&";
+            response += "f\n : Low wil be ";
             response += myDailyObjects[i].temp.min;
-            response += "&";
+            response += "f\n : Weather is ";
             response += myDailyObjects[i].weather[0].main;
             if (i != 4)
             {
-                response += ",";
+                response += ",\n";
             }
         }
 

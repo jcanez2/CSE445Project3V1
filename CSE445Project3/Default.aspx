@@ -13,6 +13,8 @@
             <h2>Weather Forecaster</h2>
             <p>
                 <br/>
+                <asp:Label ID="labLocation" runat="server" Text="Location"></asp:Label>
+                <br/>
                 <asp:Label ID="labWeather1" runat="server" Text="Weather Info"></asp:Label>
                 <br/>
                 <asp:Label ID="labWeather2" runat="server" Text="Weather Info"></asp:Label>
