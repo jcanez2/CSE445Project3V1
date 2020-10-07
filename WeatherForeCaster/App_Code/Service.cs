@@ -58,21 +58,78 @@ public class ForeCastModel
     public List<DailyObject> daily { get; set; }
 }
 
+public class CorrdObject
+{
+    public double lon { get; set; }
+    public double lat { get; set; }
+}
+
+public class CorrdByZipModel
+{
+    public CorrdObject coord { get; set; }
+    public string name { get; set; }
+}
+
 public class DailyForeCastObject
 {
     public static async Task<ForeCastModel> LoadForecast()
     {
-
+        /*
         string url = "";
-
+        
         url =
-            "https://api.openweathermap.org/data/2.5/onecall?lat=33.441792&lon=-94.037689&exclude=current,minutely,hourly,alerts&appid=0581321595fd5753f58de82a6035d871&units=imperial";
+            "https://api.openweathermap.org/data/2.5/onecall?lat=33.44842&lon=-112.0740&exclude=current,minutely,hourly,alerts&appid=0581321595fd5753f58de82a6035d871&units=imperial";
 
         using (HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(url))
         {
             if (response.IsSuccessStatusCode)
             {
                 ForeCastModel report = await response.Content.ReadAsAsync<ForeCastModel>();
+                return report;
+            }
+
+            throw new Exception(response.ReasonPhrase);
+        }
+        */
+        string url = "";
+        double longitude;
+        double latitude;
+        int enteredZip = 94040;
+        string cityName = "blank";
+
+        url = 
+            string.Format(
+                "http://api.openweathermap.org/data/2.5/weather?zip={0},us&appid=0581321595fd5753f58de82a6035d871", enteredZip);
+
+        using (HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(url))
+        {
+            if (response.IsSuccessStatusCode)
+            {
+                CorrdByZipModel coordinates = await response.Content.ReadAsAsync<CorrdByZipModel>();
+                longitude = coordinates.coord.lon;
+                latitude = coordinates.coord.lat;
+                cityName = coordinates.name;
+            }
+            else
+            {
+                throw new Exception(response.ReasonPhrase);
+            }
+
+        }
+        /*
+        url =
+            "https://api.openweathermap.org/data/2.5/onecall?lat=33.44842&lon=-112.0740&exclude=current,minutely,hourly,alerts&appid=0581321595fd5753f58de82a6035d871&units=imperial";
+        */
+        url =
+            string.Format(
+                "https://api.openweathermap.org/data/2.5/onecall?lat={0}&lon={1}&exclude=current,minutely,hourly,alerts&appid=0581321595fd5753f58de82a6035d871&units=imperial",
+                latitude, longitude);
+        using (HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(url))
+        {
+            if (response.IsSuccessStatusCode)
+            {
+                ForeCastModel report = await response.Content.ReadAsAsync<ForeCastModel>();
+                report.timezone = cityName;
                 return report;
             }
 
