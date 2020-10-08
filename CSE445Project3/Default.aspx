@@ -10,7 +10,7 @@
 
     <div class="row">
         <div class="col-md-4">
-            <h2>Weather Forecaster</h2>
+            <h2>Weather Forecaster Enter Zip</h2>
             <p>
                 <br/>
                 <asp:Label ID="labLocation" runat="server" Text="Location"></asp:Label>
@@ -32,12 +32,24 @@
             <br/>
         </div>
         <div class="col-md-4">
-            <h2>Get more libraries</h2>
+            <h2>Solar Index</h2>
             <p>
-                NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.
+                Annual Sunshine index 1-2 (low), 6-7 (high), 11+ (extreme). Enter a latitude and longitude to find the value of your desired area.
             </p>
             <p>
-                <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301949">Learn more &raquo;</a>
+                Washington DC : 38.9, -77.1&nbsp;&nbsp; New York: 40.7, -73.9&nbsp;&nbsp;&nbsp; Los Angeles : 33.9, -118.4</p>
+            <p>
+                <br/>
+               
+                <input id="txtLatitude" type="text" value="33.45" />
+                <asp:Label ID="labLatitude" runat="server" Text="Latitude"></asp:Label>
+                <br/>
+                
+                <input id="txtLongitude" type="text" value="-112.07" />
+                <asp:Label ID="labLongitude" runat="server" Text="Longitude"></asp:Label>
+                <br/>
+                <asp:Button ID="btnSunShine" runat="server" Text="Get SunShine Index" />
+
             </p>
         </div>
         <div class="col-md-4">
