@@ -92,6 +92,9 @@
             <p>
                 Upload Text File to Server
             </p>
+            <p>
+                <asp:Label ID="labReturnPath" runat="server" Text="Uploaded File Path"></asp:Label>
+            </p>
             Upload .txt file only
             <br/>
             <p>
