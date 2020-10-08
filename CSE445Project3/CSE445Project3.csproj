@@ -108,10 +108,24 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
+    <None Include="Connected Services\SolarService1\Service.wsdl" />
+    <None Include="Connected Services\SolarService1\SolarService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SolarService1\SolarService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\WeatherService1\WeatherService.disco" />
     <None Include="Connected Services\WeatherService1\configuration91.svcinfo" />
     <None Include="Connected Services\WeatherService1\configuration.svcinfo" />
     <None Include="Connected Services\WeatherService1\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\SolarService1\SolarService.disco" />
+    <None Include="Connected Services\SolarService1\configuration91.svcinfo" />
+    <None Include="Connected Services\SolarService1\configuration.svcinfo" />
+    <None Include="Connected Services\SolarService1\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -185,6 +199,11 @@
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Connected Services\SolarService1\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\WeatherService1\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -248,6 +267,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\SolarService1\" />
     <WCFMetadataStorage Include="Connected Services\WeatherService1\" />
   </ItemGroup>
   <PropertyGroup>

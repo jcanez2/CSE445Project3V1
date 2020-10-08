@@ -35,5 +35,24 @@ namespace CSE445Project3
                 labLocation.Text = "Invalid Input Try Again, enter a US Zip Code";
             }
         }
+
+        protected void btnSunShine_Click(object sender, EventArgs e)
+        {
+            
+            SolarService1.ServiceClient solarClient = new SolarService1.ServiceClient();
+            try
+            {
+                double latitude = Double.Parse(txtbLat.Text);
+                double longitude = Double.Parse(txtbLong.Text);
+
+                var solarIndex = solarClient.GetSolarIntensity(latitude, longitude);
+
+                labSolarIndex.Text = solarIndex;
+            }
+            catch (Exception)
+            {
+                labSolarIndex.Text = "Invalid Input Try Again, enter a Latitude and Longitude as a number value";
+            }
+        }
     }
 }

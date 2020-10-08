@@ -48,25 +48,58 @@
             <p>
                 <br/>
                
-                <input id="txtLatitude" type="text" value="33.45" />
-                <asp:Label ID="labLatitude" runat="server" Text="Latitude"></asp:Label>
+                <asp:TextBox ID="txtbLat" runat="server">33.45</asp:TextBox>
+&nbsp;<asp:Label ID="labLatitude" runat="server" Text="Latitude"></asp:Label>
                 <br/>
                 
-                <input id="txtLongitude" type="text" value="-112.07" />
+                &nbsp;<asp:TextBox ID="txtbLong" runat="server">-112.07</asp:TextBox>
                 <asp:Label ID="labLongitude" runat="server" Text="Longitude"></asp:Label>
                 <br/>
-                <asp:Button ID="btnSunShine" runat="server" Text="Get SunShine Index" />
-
+                <asp:Button ID="btnSunShine" runat="server" Text="Get SunShine Index" OnClick="btnSunShine_Click" />
+                <br/>
             </p>
         </div>
         <div class="col-md-4">
-            <h2>Web Hosting</h2>
+            <h2>Save User Credentials to JSON File for later Retrieval</h2>
             <p>
-                You can easily find a web hosting company that offers the right mix of features and price for your applications.
+                Enter A User Name and Password they will be saved and reference if you wish to review login later.
+            </p>
+            <asp:TextBox ID="txtUserName" runat="server"></asp:TextBox>
+            <asp:Label ID="labUserName" runat="server" Text="Enter User Name"></asp:Label>
+            <br/>
+            <p>
+                <asp:TextBox ID="txtPassword" runat="server"></asp:TextBox>
+                <asp:Label ID="labPassword" runat="server" Text="Enter Password"></asp:Label>
+                <br/>
+
+            </p>
+            <asp:Button ID="btnCredentials" runat="server" Text="Submit" />
+            <br/>
+            <p>
+                <asp:Label ID="labUserPrompt" runat="server" Text="List of Users"></asp:Label>
             </p>
             <p>
-                <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301950">Learn more &raquo;</a>
+
+                <asp:Label ID="labUserList" runat="server" Text="N/A"></asp:Label>
+
             </p>
+            <br/>
+        </div>
+        <div class="col-md-4">
+            <h2>Store Text File</h2>
+            <p>
+                Upload Text File to Server
+            </p>
+            Upload .txt file only
+            <br/>
+            <p>
+                <asp:FileUpload ID="FileUpload1" runat="server" />
+            </p>
+            <p>
+                <asp:Button ID="btnUpload" runat="server" Text="Upload" />
+                <br/>
+            </p>
+            <br/>
         </div>
     </div>
 
