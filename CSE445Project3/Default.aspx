@@ -60,15 +60,17 @@
             </p>
         </div>
         <div class="col-md-4">
-            <h2>Save User Credentials to JSON File for later Retrieval</h2>
+            <h2>Saved User Credentials on Server Validate Against Entry</h2>
             <p>
                 Enter A User Name and Password they will be saved and reference if you wish to review login later.
             </p>
-            <asp:TextBox ID="txtUserName" runat="server"></asp:TextBox>
+            <p>
+                Valid Entries (UserName, Password): (guest, password1), (user, password2), (super, password3)</p>
+            <asp:TextBox ID="txtUserName" runat="server">UserName</asp:TextBox>
             <asp:Label ID="labUserName" runat="server" Text="Enter User Name"></asp:Label>
             <br/>
             <p>
-                <asp:TextBox ID="txtPassword" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtPassword" runat="server">Password</asp:TextBox>
                 <asp:Label ID="labPassword" runat="server" Text="Enter Password"></asp:Label>
                 <br/>
 
@@ -76,11 +78,11 @@
             <asp:Button ID="btnCredentials" runat="server" Text="Submit" />
             <br/>
             <p>
-                <asp:Label ID="labUserPrompt" runat="server" Text="List of Users"></asp:Label>
+                <asp:Label ID="labUserPrompt" runat="server" Text="Response Message:"></asp:Label>
             </p>
             <p>
 
-                <asp:Label ID="labUserList" runat="server" Text="N/A"></asp:Label>
+                <asp:Label ID="labResponseMessage" runat="server" Text="N/A"></asp:Label>
 
             </p>
             <br/>
