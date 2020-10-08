@@ -75,7 +75,7 @@
                 <br/>
 
             </p>
-            <asp:Button ID="btnCredentials" runat="server" Text="Submit" />
+            <asp:Button ID="btnCredentials" runat="server" Text="Submit" OnClick="btnCredentials_Click" />
             <br/>
             <p>
                 <asp:Label ID="labUserPrompt" runat="server" Text="Response Message:"></asp:Label>

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using CSE445Project3.CredentialsService1;
 
 namespace CSE445Project3
 {
@@ -52,6 +54,27 @@ namespace CSE445Project3
             catch (Exception)
             {
                 labSolarIndex.Text = "Invalid Input Try Again, enter a Latitude and Longitude as a number value";
+            }
+        }
+
+        protected void btnCredentials_Click(object sender, EventArgs e)
+        {
+            CredentialsService1.ServiceClient credClient = new ServiceClient();
+            try
+            {
+                labResponseMessage.Text = credClient.SubmitUserCredentials(txtUserName.Text, txtPassword.Text);
+                if (labResponseMessage.Text == "This is a Valid User")
+                {
+                    labResponseMessage.ForeColor = Color.Chartreuse;
+                }
+                else
+                {
+                    labResponseMessage.ForeColor = Color.Black;
+                }
+            }
+            catch (Exception ex)
+            {
+                labResponseMessage.Text = ex.Message;
             }
         }
     }
