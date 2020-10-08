@@ -34,6 +34,13 @@
         <div class="col-md-4">
             <h2>Solar Index</h2>
             <p>
+                <asp:Label ID="labSolarPromt" runat="server" Text="Solar Index:"></asp:Label>
+                <br/>
+                <asp:Label ID="labSolarIndex" runat="server" Text="0"></asp:Label>
+
+            </p>
+            <br/>
+            <p>
                 Annual Sunshine index 1-2 (low), 6-7 (high), 11+ (extreme). Enter a latitude and longitude to find the value of your desired area.
             </p>
             <p>
