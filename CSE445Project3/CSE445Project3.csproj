@@ -115,6 +115,16 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\CredentialsService1\Service.wsdl" />
+    <None Include="Connected Services\FileUploadService1\Service.wsdl" />
+    <None Include="Connected Services\FileUploadService1\TextFileUploadService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\FileUploadService1\TextFileUploadService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\FileUploadService1\TextFileUploadService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\SolarService1\Service.wsdl" />
     <None Include="Connected Services\SolarService1\SolarService.xsd">
       <SubType>Designer</SubType>
@@ -140,6 +150,13 @@
     <None Include="Connected Services\CredentialsService1\configuration91.svcinfo" />
     <None Include="Connected Services\CredentialsService1\configuration.svcinfo" />
     <None Include="Connected Services\CredentialsService1\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\FileUploadService1\TextFileUploadService.disco" />
+    <None Include="Connected Services\FileUploadService1\configuration91.svcinfo" />
+    <None Include="Connected Services\FileUploadService1\configuration.svcinfo" />
+    <None Include="Connected Services\FileUploadService1\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -218,6 +235,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\FileUploadService1\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\SolarService1\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -287,6 +309,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\CredentialsService1\" />
+    <WCFMetadataStorage Include="Connected Services\FileUploadService1\" />
     <WCFMetadataStorage Include="Connected Services\SolarService1\" />
     <WCFMetadataStorage Include="Connected Services\WeatherService1\" />
   </ItemGroup>

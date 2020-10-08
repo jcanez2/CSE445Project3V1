@@ -11,23 +11,19 @@ using System.Threading.Tasks;
 using System.Net.Http.Formatting;
 
 // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service" in code, svc and config file together.
-public static class ApiHelper
+public static class ApiHelperApiClient
 {
-    public static HttpClient ApiClient { get; set; }
+    public static HttpClient MyApiClient { get; set; } // instantiate client
 
-    public static void InitializeClient()
+    public static void InitializeClient() // initialize client
     {
-        ApiClient = new HttpClient();
-        ApiClient.DefaultRequestHeaders.Accept.Clear();
-        /*
-        string baseAdd;
-        baseAdd =
-            @"https://api.openweathermap.org/data/2.5/onecall?lat=33.441792&lon=-94.037689&exclude=current,minutely,hourly,alerts&appid=0581321595fd5753f58de82a6035d871&units=imperial";
-        */
-        ApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        MyApiClient = new HttpClient();
+        MyApiClient.DefaultRequestHeaders.Accept.Clear();
+        MyApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
     }
 }
 
+//==================JSON object model==================
 public class WeatherObject
 {
     public string main { get; set; }
@@ -50,7 +46,6 @@ public class DailyObject
 
 }
 
-
 public class ForeCastModel
 {
     public string timezone { get; set; }
@@ -71,61 +66,46 @@ public class CorrdByZipModel
     public string name { get; set; }
 }
 
-public class DailyForeCastObject
+//=========================================================================
+
+public class DailyForeCastObject // Forecast processor json to object model
 {
     public static async Task<ForeCastModel> LoadForecast(int zip)
     {
-        /*
-        string url = "";
         
-        url =
-            "https://api.openweathermap.org/data/2.5/onecall?lat=33.44842&lon=-112.0740&exclude=current,minutely,hourly,alerts&appid=0581321595fd5753f58de82a6035d871&units=imperial";
-
-        using (HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(url))
-        {
-            if (response.IsSuccessStatusCode)
-            {
-                ForeCastModel report = await response.Content.ReadAsAsync<ForeCastModel>();
-                return report;
-            }
-
-            throw new Exception(response.ReasonPhrase);
-        }
-        */
         string url = "";
         double longitude;
         double latitude;
         int enteredZip = zip;
         string cityName = "blank";
 
+        // set up api call based on input of zip to get coordinates
         url = 
             string.Format(
                 "http://api.openweathermap.org/data/2.5/weather?zip={0},us&appid=0581321595fd5753f58de82a6035d871", enteredZip);
-
-        using (HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(url))
+        // get response from api call for latitude and longitude
+        using (HttpResponseMessage response = await ApiHelperApiClient.MyApiClient.GetAsync(url))
         {
-            if (response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode) // if response is successful
             {
                 CorrdByZipModel coordinates = await response.Content.ReadAsAsync<CorrdByZipModel>();
                 longitude = coordinates.coord.lon;
                 latitude = coordinates.coord.lat;
                 cityName = coordinates.name;
             }
-            else
+            else // if response not successful
             {
                 throw new Exception(response.ReasonPhrase);
             }
 
         }
-        /*
-        url =
-            "https://api.openweathermap.org/data/2.5/onecall?lat=33.44842&lon=-112.0740&exclude=current,minutely,hourly,alerts&appid=0581321595fd5753f58de82a6035d871&units=imperial";
-        */
+        // sep up api call with newly retrieved values from the last api call
         url =
             string.Format(
                 "https://api.openweathermap.org/data/2.5/onecall?lat={0}&lon={1}&exclude=current,minutely,hourly,alerts&appid=0581321595fd5753f58de82a6035d871&units=imperial",
                 latitude, longitude);
-        using (HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(url))
+        // make the api call and get response
+        using (HttpResponseMessage response = await ApiHelperApiClient.MyApiClient.GetAsync(url))
         {
             if (response.IsSuccessStatusCode)
             {
@@ -145,7 +125,7 @@ public class Service : IService
 
     public async Task<string> GetFiveDayForecast(int zip)
     {
-        ApiHelper.InitializeClient();
+        ApiHelperApiClient.InitializeClient();
         await LoadForecastReport(zip);
         string newTimezone = currentForeCastModel.timezone;
         int timeZoneOffset = currentForeCastModel.timezone_offset;
@@ -153,6 +133,7 @@ public class Service : IService
 
         DateTime theDates = DateTime.Today;
 
+        //================Set up the reponse for ease of parsing===========
         string response = newTimezone + ",";
         for (int i = 0; i < 5; i++)
         {
@@ -167,12 +148,14 @@ public class Service : IService
                 response += ",\n";
             }
         }
+        //========================================
 
         return response;
     }
 
     private async Task LoadForecastReport(int zip)
     {
+        // load the forecast report object in to the global model
         currentForeCastModel = await DailyForeCastObject.LoadForecast(zip);
     }
 }

@@ -91,7 +91,7 @@
             <h2>Store Text File</h2>
             <p>
                 Upload Text File to Server
-            </p>
+                : File Path to uploaded File Displayed after upload</p>
             <p>
                 <asp:Label ID="labReturnPath" runat="server" Text="Uploaded File Path"></asp:Label>
             </p>
@@ -101,7 +101,7 @@
                 <asp:FileUpload ID="FileUpload1" runat="server" />
             </p>
             <p>
-                <asp:Button ID="btnUpload" runat="server" Text="Upload" />
+                <asp:Button ID="btnUpload" runat="server" Text="Upload" OnClick="btnUpload_Click" />
                 <br/>
             </p>
             <br/>

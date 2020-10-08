@@ -35,7 +35,7 @@ public class SunIntensityModel
 }
 //======================================================================
 
-public class SunIntensityProcessor
+public class SunIntensityProcessor // engine to url to model
 {
     public static async Task<SunIntensityModel> LoadSunIntensityModel(double lat, double longitude)
     {
@@ -44,23 +44,24 @@ public class SunIntensityProcessor
         double localLatitude = lat;
         double localLongitude = longitude;
         
-
+        // base url
         url =
             "https://developer.nrel.gov/api/solar/solar_resource/v1.json?api_key=af9Pr6H2WleNc0oL3KolePr1ic5WCKospWH7cVXa&lat=33.4484&lon=-112.0740";
-
+        // url for input
         string checkURL = String.Format("https://developer.nrel.gov/api/solar/solar_resource/v1.json?api_key=af9Pr6H2WleNc0oL3KolePr1ic5WCKospWH7cVXa&lat={0}&lon={1}", localLatitude, localLongitude);
 
-        using (HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(checkURL))
+        using (HttpResponseMessage response = await ApiClientApiHelper.MyApiClient.GetAsync(checkURL)) // create a "browser" for our request
         {
-            if (response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode) // is the response message from our request is successful
             {
+                // convert the received JSON to the object model
                 SunIntensityModel intensityModel = await response.Content.ReadAsAsync<SunIntensityModel>();
-
+                // add the url to the model for debugging
                 intensityModel.checkValue = checkURL;
-
+                // return the model
                 return intensityModel;
             }
-
+            // if our request fails
             throw new Exception(response.ReasonPhrase);
         }
     }
@@ -69,15 +70,17 @@ public class SunIntensityProcessor
 
 //======================================================================
 //===================Web Client========================================
-public static class ApiHelper
+public static class ApiClientApiHelper
 {
-    public static HttpClient ApiClient { get; set; } // create web client
+    public static HttpClient MyApiClient { get; set; } // instantiate client
 
-    public static void InitializeClient()
+    public static void InitializeClient() // initialize webclient
     {
-        ApiClient = new HttpClient();
-        ApiClient.DefaultRequestHeaders.Accept.Clear();
-        ApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+        MyApiClient = new HttpClient();  // initialize client
+        MyApiClient.DefaultRequestHeaders.Accept.Clear(); // clear the header of the client as it is static
+        // set the header of the client to receive JSON
+        MyApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
     }
 }
 
@@ -88,10 +91,10 @@ public class Service : IService
 
     public async Task<string> GetSolarIntensity(double latitude, double longitude)
     {
-        ApiHelper.InitializeClient();
+        ApiClientApiHelper.InitializeClient(); 
         await loadSunIntensityModelTask(latitude, longitude);
+        // get sunshine value from model
         string sunShineValue = currentSunIntensityModel.outputs.avg_dni.annual.ToString();
-        //string sunShineValue = currentSunIntensityModel.checkValue;
         return sunShineValue;
     }
 

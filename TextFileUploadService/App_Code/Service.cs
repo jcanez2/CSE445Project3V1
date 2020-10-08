@@ -11,12 +11,14 @@ using System.Web;
 // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service" in code, svc and config file together.
 public class Service : IService
 {
-    public string currentFileName = "FileWithoutName";
-
+    // set a default name for the file
+    public static string currentFileName = "FileWithoutName";
+    // get the save folder path
     public string saveFolderPath = HttpRuntime.AppDomainAppPath + "\\App_Data";
     
     public void SendFileName(string fileName)
     {
+        // change incoming file name
         currentFileName = fileName;
     }
 
@@ -28,21 +30,19 @@ public class Service : IService
         {
             filePath += Guid.NewGuid().ToString() + ".txt";
         }
-        else
-        {
-            filePath += currentFileName;
-        }
-
+        // read in the stream sent from the client
         StreamReader reader = new StreamReader(fileContents);
 
         var contentString = reader.ReadToEnd();
-
+        // create a new file at path location
         File.WriteAllText(filePath, contentString);
+        // change file name to default
+        currentFileName = "FileWithoutName";
 
         return filePath;
     }
 
-    public string StringToFile(string fileContent)
+    public string StringToFile(string fileContent) // used for debugging 
     {
         string filePath = String.Format(@"{0}\testfile", saveFolderPath);
         
